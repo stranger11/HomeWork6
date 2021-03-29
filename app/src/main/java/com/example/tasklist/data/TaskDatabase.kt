@@ -12,10 +12,10 @@ abstract class TaskDatabase: RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: TaskDatabase? = null
+        private var inst: TaskDatabase? = null
 
         fun getDatabase(context: Context): TaskDatabase {
-            val tempInstance = INSTANCE
+            val tempInstance = inst
             if (tempInstance != null) {
                 return tempInstance
             }
@@ -25,7 +25,7 @@ abstract class TaskDatabase: RoomDatabase() {
                     TaskDatabase::class.java,
                     "task_database"
                 ).build()
-                INSTANCE = instance
+                inst = instance
                 return instance
             }
         }

@@ -3,12 +3,12 @@ package com.example.tasklist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tasklist.data.Task
-import com.example.tasklist.data.TaskViewModel
 import kotlinx.android.synthetic.main.custom_row.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ListOfTasksAdapter: RecyclerView.Adapter<ListOfTasksAdapter.MyViewHolder>() {
 
@@ -26,6 +26,7 @@ class ListOfTasksAdapter: RecyclerView.Adapter<ListOfTasksAdapter.MyViewHolder>(
         val currentItem = taskList[position]
         holder.itemView.task_text.text = currentItem.task
         holder.itemView.text_description.text = currentItem.description
+        holder.itemView.date_txt.text = currentItem.date
 
         holder.itemView.setOnClickListener {
             val action = ListOfTasksFragmentDirections.actionListOfTasksFragmentToUpdateTaskFragment(currentItem)
@@ -41,4 +42,5 @@ class ListOfTasksAdapter: RecyclerView.Adapter<ListOfTasksAdapter.MyViewHolder>(
     override fun getItemCount(): Int {
         return taskList.size
     }
+
 }

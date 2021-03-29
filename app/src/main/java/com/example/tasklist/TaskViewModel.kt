@@ -1,9 +1,12 @@
-package com.example.tasklist.data
+package com.example.tasklist
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.tasklist.data.Task
+import com.example.tasklist.data.TaskDatabase
+import com.example.tasklist.data.TaskRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -16,6 +19,7 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
         val taskDao = TaskDatabase.getDatabase(application).taskDao()
         repository = TaskRepository(taskDao)
         readAllData = repository.readAllData
+
     }
 
     fun addTask(task: Task) {

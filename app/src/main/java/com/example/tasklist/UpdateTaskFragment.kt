@@ -9,31 +9,28 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.tasklist.data.Task
-import com.example.tasklist.data.TaskViewModel
-import kotlinx.android.synthetic.main.custom_row.*
-import kotlinx.android.synthetic.main.custom_row.view.*
+import com.example.tasklist.data.*
 import kotlinx.android.synthetic.main.fragment_update_task.*
 import kotlinx.android.synthetic.main.fragment_update_task.view.*
 
 class UpdateTaskFragment : Fragment() {
 
     private val args by navArgs<UpdateTaskFragmentArgs>()
-    private lateinit var mTaskViewModel: TaskViewModel
+    private lateinit var taskViewModel: TaskViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_update_task, container, false)
-        mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+        taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+
         root.update_task.setText(args.currentTask.task)
         root.update_description.setText(args.currentTask.description)
 
         root.update_button.setOnClickListener {
             updateItem()
         }
-
         setHasOptionsMenu(true)
         return root
     }
@@ -43,8 +40,8 @@ class UpdateTaskFragment : Fragment() {
         val description = update_description.text.toString()
 
         if(inputCheck(task, description)) {
-            val updatedTask = Task(args.currentTask.id, task, description)
-            mTaskViewModel.updateTask(updatedTask)
+            val updatedTask = Task(args.currentTask.id, task, description, args.currentTask.date)
+            taskViewModel.updateTask(updatedTask)
             Toast.makeText(requireContext(),
                 R.string.success_upd,
                 Toast.LENGTH_SHORT)
@@ -76,7 +73,7 @@ class UpdateTaskFragment : Fragment() {
     private fun deleteTask() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") { _, _ ->
-            mTaskViewModel.deleteTask(args.currentTask)
+            taskViewModel.deleteTask(args.currentTask)
             findNavController().navigate(R.id.action_updateTaskFragment_to_listOfTasksFragment)
             Toast.makeText(requireContext(),
                 R.string.delete,

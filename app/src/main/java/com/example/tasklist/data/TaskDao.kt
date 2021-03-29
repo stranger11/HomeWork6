@@ -7,14 +7,14 @@ import androidx.room.*
 interface TaskDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addTask(task: Task)
+    fun addTask(task: Task)
 
     @Update
-    suspend fun updateTask(task: Task)
+    fun updateTask(task: Task)
 
     @Delete
-    suspend fun deleteTask(task: Task)
+    fun deleteTask(task: Task)
 
-    @Query("SELECT * FROM task_table ORDER BY id ASC")
+    @Query("SELECT * FROM task ORDER BY id ASC")
     fun readAllData(): LiveData<List<Task>>
 }
